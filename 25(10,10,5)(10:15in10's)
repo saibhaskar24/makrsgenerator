@@ -1,9 +1,9 @@
 import pandas as pd
 import math
 import numpy as np
-dff = pd.ExcelFile('2014 BATCH LAB INTERNALS.xlsx')
+dff = pd.ExcelFile('2013 BATCH LAB INTERNALS.xlsx')
 minn=[]
-writer = pd.ExcelWriter("outl2014.xlsx")
+writer = pd.ExcelWriter("outl2013.xlsx")
 import random
 
 def avgdiv(t):
@@ -50,7 +50,7 @@ def avgdiv(t):
 
 for sheet in dff.sheet_names:
     print(sheet)
-    df = pd.read_excel('2014 BATCH LAB INTERNALS.xlsx',sheet)
+    df = pd.read_excel('2013 BATCH LAB INTERNALS.xlsx',sheet)
     regno = df['s.no']
     lab=df['lab']
     res = {"s.no":[]}
@@ -88,6 +88,16 @@ for sheet in dff.sheet_names:
         elif total ==0:
             proj = 0
         total -= proj
+        if total > 10:
+            rrr = total - 10
+            proj+=rrr
+            total = 10
+        if proj > 10:
+            rrr = proj - 10
+            total+=rrr
+            proj = 10
+        if total>10 or proj>10 or assig > 5:
+            print("Warning",total,proj,assig,lab[I])
         if total < 0 or assig + proj + total != lab[I] and total > proj:
             print("Total",total,"Internal(10)", lab[I])
         res["Record(5)"].append(assig)
